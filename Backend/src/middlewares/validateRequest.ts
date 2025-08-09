@@ -7,7 +7,6 @@ export const validateRequest = (schema: ZodType) => (req: Request, res: Response
     const result = schema.safeParse(req.body);
     if(!result.success) {
         const errorMessages = result.error.issues.map(err => err.message);
-        console.log(result);
         return sendResponse(res, codeStatus.BAD_REQUEST, errorMessages, "Error de validacion");
     };
     req.body = result.data;
