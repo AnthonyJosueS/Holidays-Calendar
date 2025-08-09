@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@utils/*": ["shared/utils/*"],
+      "@controllers/*": ["controllers/*"],
+      "@services/*": ["services/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@schemas/*": ["schemas/*"],
+      "@types/*": ["types/*"],
+      "@shared/*": ["shared/*"],
+      "@lib/*": ["lib/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

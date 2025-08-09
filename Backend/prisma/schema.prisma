@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model HolidayType {
+  idHolidayType   BigInt    @id @default(autoincrement()) @map("id_holiday_type")
+  name            String    @db.VarChar(64)
+  status          String    @db.VarChar(64)
+  createdAt       DateTime  @map("create_at")
+  modifiedAt      DateTime? @map("modified_at")
+  deletedAt       DateTime? @map("deleted_at")
+  holidays        Holiday[]
+  @@map("holiday_type")
+}
+
+model Holiday {
+  idHoliday            BigInt       @id @default(autoincrement()) @map("id_holiday")
+  name                 String       @db.VarChar(100)
+  date                 DateTime
+  isRecovery           Boolean      @map("is_recovery")
+  status               String       @db.VarChar(64)
+  createdAt            DateTime     @map("create_at")
+  modifiedAt           DateTime?    @map("modified_at")
+  deletedAt            DateTime?    @map("deleted_at")
+  holidayTypeId        BigInt       @map("holiday_type_id")
+  holidayType          HolidayType  @relation(fields: [holidayTypeId], references: [idHolidayType])
+  @@map("holiday")
+}
