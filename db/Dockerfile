@@ -19,7 +19,10 @@ ENV ACCEPT_EULA=Y \
 
 COPY schema.sql /docker-entrypoint-initdb.d/schema.sql
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN awk '{ sub("\r$", ""); print }' /usr/local/bin/docker-entrypoint.sh > /tmp/entry.sh \
+ && mv /tmp/entry.sh /usr/local/bin/docker-entrypoint.sh \
+ && chmod +x /usr/local/bin/docker-entrypoint.sh
+# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 1433
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
