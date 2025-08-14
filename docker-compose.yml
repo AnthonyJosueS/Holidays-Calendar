@@ -1,15 +1,17 @@
 services:
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: db
+    build:
+      context: ./db
+    image: holidays-db:latest
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Pass1998" 
       MSSQL_PID: "Developer"
+      SA_PASSWORD: "Pass1998"   
+      DB_NAME: "holidays_calendar_db"
     ports:
       - "1433:1433"
     volumes:
-      - dbdata:/var/opt/mssql
+      - dbdata:/var/opt/mssql       
     networks: [appnet]
 
   api:

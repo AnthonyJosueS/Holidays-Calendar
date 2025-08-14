@@ -83,7 +83,6 @@ export default function HolidaysPage() {
 
   return (
     <Box sx={{ p: 2 }}>
-      {/* Filtros centrados + botón Nuevo */}
       <Stack alignItems="center" spacing={1.5} sx={{ mb: 2 }}>
         <FiltersBar
           year={selectedYear}

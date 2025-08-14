@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "paths": {
       "@utils/*": ["shared/utils/*"],
       "@controllers/*": ["controllers/*"],

@@ -30,7 +30,6 @@ export default function HolidayCalendar({ year, month, byDay, onSelectDate, onPr
           <IconButton size="small" onClick={onNextMonth}><ArrowForwardIosIcon fontSize="small" /></IconButton>
         </Stack>
 
-        {/* Encabezado */}
         <GridLegacy container spacing={1} sx={{ mb: 1 }}>
           {DAYS_ES.map((d) => (
             <GridLegacy item xs={12/7} key={d}>
@@ -39,7 +38,6 @@ export default function HolidayCalendar({ year, month, byDay, onSelectDate, onPr
           ))}
         </GridLegacy>
 
-        {/* Celdas */}
         <GridLegacy container spacing={1}>
           {cells.map(({ d, inMonth }, idx) => {
             const iso = d.format("YYYY-MM-DD");
