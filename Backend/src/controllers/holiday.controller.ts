@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { GetAllHolidays, CreateHoliday, UpdateHoliday, InactivateHoliday, ActivateHoliday } from "@services/holiday.service";
+import { GetAllHolidays, CreateHoliday, UpdateHoliday, InactivateHoliday, ActivateHoliday } from "@services/holiday.service.js";
 import serializeBigIntToNumber from "@shared/helpers/serializeBigIntToNumber";
 import { sendResponse } from "@shared/helpers/baseResponse/ResponseBuilder";
 
