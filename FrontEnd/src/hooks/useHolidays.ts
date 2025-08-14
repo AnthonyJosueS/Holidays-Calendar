@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import type { Holiday, HolidayQuery } from "../types/models";
 import { getHolidays } from "../services/holidaysServices";
 import dayjs from "dayjs";
@@ -9,18 +9,25 @@ export function useHolidays(initialQuery?: HolidayQuery) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
+  const fetchData = useCallback(async (q: HolidayQuery) => {
     setLoading(true);
     setError(null);
-    getHolidays(query)
-      .then((data) => !cancelled && setHolidays(data))
-      .catch((e) => !cancelled && setError(e.message))
-      .finally(() => !cancelled && setLoading(false));
-    return () => { cancelled = true; };
-  }, [JSON.stringify(query)]);
+    try {
+      const data = await getHolidays(q);
+      setHolidays(data);
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  
+  useEffect(() => {
+    fetchData(query);
+  }, [fetchData, JSON.stringify(query)]);
+
+  const refetch = useCallback(() => fetchData(query), [fetchData, query]);
+
   const byDay = useMemo(() => {
     const m = new Map<string, Holiday[]>();
     for (const h of holidays) {
@@ -32,5 +39,5 @@ export function useHolidays(initialQuery?: HolidayQuery) {
     return m;
   }, [holidays]);
 
-  return { holidays, byDay, query, setQuery, loading, error };
+  return { holidays, byDay, query, setQuery, loading, error, refetch };
 }

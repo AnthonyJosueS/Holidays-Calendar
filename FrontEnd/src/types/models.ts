@@ -25,6 +25,13 @@ export interface HolidayQuery {
   year?: number;
   month?: number;          // 1-12
   holidayTypeId?: number;
-  isRecovery: boolean;
+  isRecovery?: boolean;
   status?: string;
+}
+
+export interface HolidayRequest {
+  name: string;
+  date: string | Date;     // enviamos ISO al backend
+  isRecovery: boolean;
+  holidayTypeId: number;
 }

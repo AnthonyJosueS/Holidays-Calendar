@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pass1998" 
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - dbdata:/var/opt/mssql
+    networks: [appnet]
+
+  api:
+    build:
+      context: ./backend
+    container_name: api
+    env_file:
+      - ./Backend/.env.docker
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks: [appnet]
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: "/api"   
+    container_name: web
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks: [appnet]
+
+volumes:
+  dbdata: {}
+
+networks:
+  appnet: {}

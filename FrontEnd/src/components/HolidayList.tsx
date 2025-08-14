@@ -1,4 +1,6 @@
-import { Card, CardContent, Divider, List, ListItem, Typography, Stack } from "@mui/material";
+import { Card, CardContent, Divider, List, ListItem, Typography, Stack, IconButton, Tooltip } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import type { Holiday } from "../types/models";
 import dayjs from "dayjs";
 
@@ -9,9 +11,11 @@ type Props = {
   holidayTypeId?: number;
   isRecovery?: boolean;
   title?: string;
-}
+  onEdit?: (h: Holiday) => void;        
+  onDelete?: (h: Holiday) => void;        
+};
 
-export default function HolidayList({ holidays, month, year, holidayTypeId, isRecovery, title }: Props) {
+export default function HolidayList({ holidays, month, year, holidayTypeId, isRecovery, title, onEdit, onDelete }: Props) {
   const filtered = holidays
     .filter(h => {
       const d = dayjs(h.date);
@@ -33,9 +37,8 @@ export default function HolidayList({ holidays, month, year, holidayTypeId, isRe
             <Typography variant="body2" color="text.secondary">Sin feriados para el filtro.</Typography>
           )}
           {filtered.map(h => {
-            console.log(h);
             const d = dayjs(h.date);
-            const fechaTxt = d.format("D [de] MMMM"); // requiere locale ES para acentos; igual lo mostramos en minus y centrado
+            const fechaTxt = d.format("D [de] MMMM");
             return (
               <ListItem
                 key={h.idHoliday}
@@ -44,6 +47,9 @@ export default function HolidayList({ holidays, month, year, holidayTypeId, isRe
                   border: "1px solid",
                   borderColor: h.isRecovery ? "warning.main" : "success.main",
                   borderRadius: 1.5,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
                 <Stack width="100%" alignItems="center" textAlign="center" spacing={0.2}>
@@ -54,11 +60,25 @@ export default function HolidayList({ holidays, month, year, holidayTypeId, isRe
                     {h.name}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    {h.isRecovery ? "Recuperable" : "No recuperable"}
+                    {h.isRecovery ? "RECUPERABLE" : "NO RECUPERABLE"} · FERIADO {h.holidayType?.name ?? ""}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    FERIADO {h.holidayType?.name}
-                  </Typography>
+                </Stack>
+
+                <Stack direction="row" spacing={0.5} sx={{ ml: 1 }}>
+                  {onEdit && (
+                    <Tooltip title="Editar">
+                      <IconButton size="small" onClick={() => onEdit(h)}>
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+                  {onDelete && (
+                    <Tooltip title="Eliminar">
+                      <IconButton size="small" color="error" onClick={() => onDelete(h)}>
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
                 </Stack>
               </ListItem>
             );
