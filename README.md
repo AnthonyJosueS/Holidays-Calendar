@@ -8,8 +8,8 @@ Guía paso a paso para levantar **Base de Datos (SQL Server)**, **API (Node/Expr
 - **PowerShell/Terminal** con acceso al proyecto.
 
 ## 1) Estructura del proyecto
-El proyecto cuenta con una estructura monorepositorio, por motivo de practicidad y practico para el tamaño del proyecto.
-Se encuentran las carpetas divididas por Stack, cada una con su configuracion de docker y sus librerias independientes.
+El proyecto cuenta con una estructura monorepositorio, por motivo de practicidad para el tamaño del proyecto.
+Las carpetas divididas por Stack, cada una con su configuracion de docker y sus librerias independientes.
 
 ## 2) Variables de entorno (Backend)
 Las variables de entorno se van a configurar en el archivo `BackEnd/.env.docker`
